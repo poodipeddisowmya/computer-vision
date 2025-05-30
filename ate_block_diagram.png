@@ -1,0 +1,44 @@
+// ATE Schematic PIC Block Diagram
+digraph {
+	dpi=300
+	rankdir=TB
+	PS [label="Power Supply
+(Stable Voltage)" fillcolor="#E0E0E0" shape=box style="rounded,filled"]
+	MCU [label="STM32F030C8
+Microcontroller" fillcolor="#B0BEC5" shape=box style="rounded,filled"]
+	LED [label="LED Indicators
+(Status Display)" fillcolor="#E0E0E0" shape=box style="rounded,filled"]
+	IO [label="I/O Expander
+(PCA9674A x7)" fillcolor="#CFD8DC" shape=box style="rounded,filled"]
+	CM [label="Current Measurement
+(8 Channels)" fillcolor="#E0E0E0" shape=box style="rounded,filled"]
+	DAQ [label="Data Acquisition
+(ADC MCU Interface)" fillcolor="#E0E0E0" shape=box style="rounded,filled"]
+	PD [label="Power Distribution" fillcolor="#E0E0E0" shape=box style="rounded,filled"]
+	PODS [label="Test Pods x6
+(PWR SWD CAN Motor...)" fillcolor="#CFD8DC" shape=box style="rounded,filled"]
+	DUT [label="DUT Interface
+(PIC Boards x6)" fillcolor="#E0E0E0" shape=box style="rounded,filled"]
+	CAN [label="CAN Bus Switching
+(12 Relays via MCU)" fillcolor="#CFD8DC" shape=box style="rounded,filled"]
+	GP [label="Gang Programming
+(SWD Interface)" fillcolor="#E0E0E0" shape=box style="rounded,filled"]
+	PS -> MCU [label=Power]
+	MCU -> LED [label=Status]
+	MCU -> IO [label="I2C Control"]
+	IO -> PODS [label=GPIO]
+	MCU -> CM [label="Analog Read"]
+	CM -> DAQ [label=Voltage]
+	PS -> PD [label=Power]
+	PD -> PODS [label=Power]
+	PODS -> DUT [label=Connectors]
+	DUT -> CAN [label="CAN Bus"]
+	MCU -> CAN [label="Relay Control"]
+	MCU -> GP [label="SWD Data"]
+	subgraph cluster_pods {
+		label="Test Pod and DUT Group" style=dashed
+		PODS
+		DUT
+		rank=same
+	}
+}

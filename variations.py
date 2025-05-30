@@ -1,0 +1,16 @@
+import open3d as o3d
+
+# Load the point cloud
+pcd = o3d.io.read_point_cloud(r"C:\Users\Sowmya\Desktop\sowmya\PCD.zip\variations.pcd")
+
+# Set the background to black
+vis = o3d.visualization.Visualizer()
+vis.create_window()
+opt = vis.get_render_option()
+opt.background_color = [0, 0, 0]  # Black background
+opt.point_size = 3  # Increase point size for better visibility
+
+# Add and render the point cloud
+vis.add_geometry(pcd)
+vis.run()
+vis.destroy_window()
