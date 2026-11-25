@@ -1,0 +1,86 @@
+# OS08A10 8MP USB camera (OmniVision OS08A10, 1/1.8", 2.0 um pixels, 3840x2160 active,
+# rolling shutter, BSI) on Jetson Orin Nano.  USB 2.0 UVC module: MJPG / YUY2.
+#
+# A calibration is only valid for the exact width x height x pixel-format it belongs to.
+# Lower resolutions are scaled OR cropped by the module's ISP; a mode is only derived from
+# another after the re-sampling has been measured on the camera (`camcal derive`).
+
+camera:
+  device: auto              # auto | /dev/videoN
+  match_card: "HJ 4K Camera"  # V4L2 card name of the OS08A10 module (Sonix bridge 0c45:636d)
+  usb_serial: null          # pin to one physical camera if several are connected
+  usb_port_path: null       # or pin to a USB port, e.g. "1-2.3"
+
+# Mode table from the module datasheet (Waveshare OS08A10 8MP USB Camera (A)).
+# Confirm with `python3 -m camcal probe` once the camera is connected.
+profiles:
+  4k_mjpg:      {width: 3840, height: 2160, fourcc: MJPG, fps: 25}   # PRIMARY precision mode (live)
+  1440p_mjpg:   {width: 2560, height: 1440, fourcc: MJPG, fps: 25}   # precision / speed balance
+  1080p_mjpg:   {width: 1920, height: 1080, fourcc: MJPG, fps: 25}   # close-range only. NOTE: did not stream on first test (re-plug & retest)
+  4k_yuyv:      {width: 3840, height: 2160, fourcc: YUYV, fps: 1}    # uncompressed stills (static metrology)
+  1440p_yuyv:   {width: 2560, height: 1440, fourcc: YUYV, fps: 1}
+  1080p_yuyv:   {width: 1920, height: 1080, fourcc: YUYV, fps: 1}
+  960p_mjpg:    {width: 1280, height: 960,  fourcc: MJPG, fps: 60}   # MEASURED: centre crop (2880x2160 of sensor) - narrower FOV
+  720p_mjpg:    {width: 1280, height: 720,  fourcc: MJPG, fps: 60}   # MEASURED: full FOV / 3 - too coarse for sub-mm
+
+# Controls applied ONLY while capturing calibration images. The complete original
+# control state is snapshotted before and restored exactly afterwards (also on
+# Ctrl-C / crash), so other projects using this camera are not affected.
+# Keys are normalised V4L2 names (see `probe`); missing keys are reported and skipped.
+# Geometry controls (zoom/pan/tilt/focus/flip) are deliberately NOT changed: the
+# calibration records them and the runtime refuses to run if they differ later.
+calibration_lock:
+  white_balance_automatic: 0        # (photometric only) stable colours between averaged frames
+  exposure_dynamic_framerate: 0     # keep the frame rate constant (no exposure-driven fps drops)
+  backlight_compensation: 0
+# Exposure during calibration is driven automatically (manual mode, white squares ~80 %,
+# short exposure first, gain only when needed) - see capture.auto_exposure.
+
+# `python3 -m camcal auto` - one command for everything
+auto:
+  profiles: [4k_mjpg, 1440p_mjpg]   # calibrated in this order; modes that do not stream are skipped.
+  # 1 fps YUYV modes are NOT in the default run: with 1 fps live view they need a tripod.
+  # Add them explicitly when the camera is on a tripod:  camcal auto --profiles 4k_yuyv
+  rewarm_minutes: 0         # between modes (the camera is already warm)
+  max_rounds: 3             # re-enter capture automatically if a calibration needs more data
+
+capture:
+  frames_to_average: 2      # hand-held: 2 consecutive frames, averaged only if they agree
+  still_px: 1.0             # max motion between the 2 frames (slow hand drift is fine: blur < 0.3 px at 20 ms)
+  average_below_px: 0.35    # average the 2 frames only if they moved less than this
+  stable_px_1080: 0.6       # preview steadiness threshold (scaled with resolution)
+  stable_time_s: 0.30       # how long the camera must be steady before an automatic capture
+  min_corners: 20
+  min_square_px: 14.0
+  max_saturated_frac: 0.005
+  min_contrast: 60
+  min_pose_distance: 0.06   # reject near-duplicate views
+  warmup_minutes: 0         # set 10 if the camera was JUST plugged in (focal length drifts while it heats up)
+  nominal_hfov_deg: 70.0    # initial guidance only (replaced by interim calibrations)
+  auto_exposure: true
+  max_exposure: 200         # 20 ms cap (units of 100 us) - limits motion blur when hand-held
+  max_gain: 40
+  target_timeout_s: 30      # the magenta target is only a suggestion; skipped after 30 s
+  intermediate_every: 5     # interim calibration every N new views (guidance + auto-removal of bad views)
+  finish_countdown_s: 5
+  stall_s: 120             # no useful view for this long (after min_views) -> finish; report grades it
+  max_regen_rounds: 4       # new targets generated for whatever the checklist still lacks
+  completion:               # the session ends by itself when ALL of these are met
+    min_views: 30
+    max_views: 60
+    min_cells: 0.90         # fraction of the 16x9 image grid containing corners
+    min_corner_pts: 10      # corners in each image-corner region (outer 15 % box)
+    corner_region_frac: 0.15
+    min_tilt_each: 4        # views tilted > 20 deg left / right / up / down
+    min_frontal: 3
+    min_near: 4
+    min_far: 3
+    max_uncertainty_px: 0.15   # interim bootstrap uncertainty of the undistortion map
+
+calibration:
+  model: auto               # auto (cross-validated) | brown_k1k2 | brown_k1k2k3 | rational | rational_thinprism
+  candidates: [brown_k1k2, brown_k1k2k3]   # rational never won on this lens and costs ~15 min; add it back to test
+  min_corners: 15
+  folds: 5
+  bootstrap: 20
+  working_distances_mm: [150, 250, 400, 600, 800, 1000, 1500]
