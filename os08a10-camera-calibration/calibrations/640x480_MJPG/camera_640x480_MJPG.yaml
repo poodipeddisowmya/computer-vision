@@ -1,0 +1,37 @@
+%YAML:1.0
+---
+calibration_time: "2026-11-25T19:17:31"
+mode_key: "640x480_MJPG"
+image_width: 640
+image_height: 480
+pixel_format: MJPG
+fps: 60.
+distortion_model: brown_k1k2
+camera_matrix: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 7.8490750133395409e+02, 0., 3.2646392956711242e+02, 0.,
+       7.8497606223387231e+02, 2.4328514948600795e+02, 0., 0., 1. ]
+distortion_coefficients: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [ -1.6754137557323548e-01, 4.7036529416198188e-02,
+       5.6970378562343851e-05, -2.3804079744723240e-04, 0. ]
+new_camera_matrix_alpha0: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 7.6295921475918738e+02, 0., 3.2676117959271869e+02, 0.,
+       7.7266363812914165e+02, 2.4341927636963004e+02, 0., 0., 1. ]
+new_camera_matrix_alpha1: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 7.5021239160563391e+02, 0., 3.2673886895110866e+02, 0.,
+       7.4993271233289670e+02, 2.4343231249275766e+02, 0., 0., 1. ]
+rms_reprojection_px: 9.5934571446093131e-02
+grade: PASS
+derived_from: "1280x960_MJPG"
+geometry_controls: "{}"
