@@ -1,0 +1,37 @@
+%YAML:1.0
+---
+calibration_time: "2026-11-25T19:19:37"
+mode_key: "3840x2160_YUYV"
+image_width: 3840
+image_height: 2160
+pixel_format: YUYV
+fps: 1.
+distortion_model: brown_k1k2
+camera_matrix: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 3.5309090548414238e+03, 0., 1.9307295634257671e+03, 0.,
+       3.5317220025957713e+03, 1.1049176077165480e+03, 0., 0., 1. ]
+distortion_coefficients: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [ -1.6994276200603947e-01, 6.4505177519053283e-02,
+       1.7367888328312126e-05, -1.0583158884545747e-03, 0. ]
+new_camera_matrix_alpha0: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 3.3592959636488267e+03, 0., 1.9277971545201947e+03, 0.,
+       3.4758761370713582e+03, 1.1057450311808595e+03, 0., 0., 1. ]
+new_camera_matrix_alpha1: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 3.3076830487572215e+03, 0., 1.9270979530211291e+03, 0.,
+       3.3072838009629995e+03, 1.1056939567384993e+03, 0., 0., 1. ]
+rms_reprojection_px: 8.6062067637998474e-01
+grade: PASS
+derived_from: "3840x2160_MJPG"
+geometry_controls: "{}"

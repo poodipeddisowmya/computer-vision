@@ -1,0 +1,49 @@
+%YAML:1.0
+---
+calibration_time: "2026-11-25T18:11:22"
+camera: "{}"
+mode_key: "1280x960_MJPG"
+image_width: 1280
+image_height: 960
+pixel_format: MJPG
+fps: 60.
+distortion_model: brown_k1k2
+camera_matrix: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 1.5698150026679082e+03, 0., 6.5342785913422483e+02, 0.,
+       1.5699521244677446e+03, 4.8707029897201591e+02, 0., 0., 1. ]
+distortion_coefficients: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [ -1.6754137557323548e-01, 4.7036529416198188e-02,
+       5.6970378562343851e-05, -2.3804079744723240e-04, 0. ]
+new_camera_matrix_alpha0: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 1.5258495902425122e+03, 0., 6.5402328712241524e+02, 0.,
+       1.5452757431079906e+03, 4.8733912714847355e+02, 0., 0., 1. ]
+roi_alpha0: !!opencv-matrix
+   rows: 4
+   cols: 1
+   dt: i
+   data: [ 0, 0, 1279, 959 ]
+new_camera_matrix_alpha1: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 1.5003041903324333e+03, 0., 6.5397852470420457e+02, 0.,
+       1.4997446716382412e+03, 4.8736524765033806e+02, 0., 0., 1. ]
+roi_alpha1: !!opencv-matrix
+   rows: 4
+   cols: 1
+   dt: i
+   data: [ 11, 14, 1258, 931 ]
+rms_reprojection_px: 1.9186914289218626e-01
+bootstrap_uncertainty_px_max: 4.0950933027463998e-01
+n_views: 138
+grade: PASS
+geometry_controls: "{}"

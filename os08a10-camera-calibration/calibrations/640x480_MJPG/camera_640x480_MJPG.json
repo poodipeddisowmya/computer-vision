@@ -1,0 +1,188 @@
+{
+ "schema": "camcal/1",
+ "derived": true,
+ "mode": {
+  "width": 640,
+  "height": 480,
+  "fourcc": "MJPG",
+  "fps": 60
+ },
+ "mode_key": "640x480_MJPG",
+ "image_size": [
+  640,
+  480
+ ],
+ "distortion_model": "brown_k1k2",
+ "camera_matrix": [
+  [
+   784.9075013339541,
+   0.0,
+   326.4639295671124
+  ],
+  [
+   0.0,
+   784.9760622338723,
+   243.28514948600795
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "dist_coeffs": [
+  -0.16754137557323548,
+  0.04703652941619819,
+  5.697037856234385e-05,
+  -0.0002380407974472324,
+  0.0
+ ],
+ "new_camera_matrix_alpha0": [
+  [
+   762.9592147591874,
+   0.0,
+   326.7611795927187
+  ],
+  [
+   0.0,
+   772.6636381291416,
+   243.41927636963004
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "new_camera_matrix_alpha1": [
+  [
+   750.2123916056339,
+   0.0,
+   326.73886895110866
+  ],
+  [
+   0.0,
+   749.9327123328967,
+   243.43231249275766
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "fov_deg": {
+  "horizontal": 45.44080975093061,
+  "vertical": 34.44145289435922,
+  "diagonal": 56.01586906449416
+ },
+ "metric_resolution": {
+  "150": {
+   "mm_per_px_x": 0.19110532100288796,
+   "mm_per_px_y": 0.19108862959863057,
+   "field_of_view_mm": [
+    122.30740544184829,
+    91.72254220734267
+   ]
+  },
+  "250": {
+   "mm_per_px_x": 0.31850886833814657,
+   "mm_per_px_y": 0.3184810493310509,
+   "field_of_view_mm": [
+    203.84567573641382,
+    152.87090367890445
+   ]
+  },
+  "400": {
+   "mm_per_px_x": 0.5096141893410345,
+   "mm_per_px_y": 0.5095696789296815,
+   "field_of_view_mm": [
+    326.1530811782621,
+    244.5934458862471
+   ]
+  },
+  "600": {
+   "mm_per_px_x": 0.7644212840115518,
+   "mm_per_px_y": 0.7643545183945223,
+   "field_of_view_mm": [
+    489.22962176739316,
+    366.8901688293707
+   ]
+  },
+  "800": {
+   "mm_per_px_x": 1.019228378682069,
+   "mm_per_px_y": 1.019139357859363,
+   "field_of_view_mm": [
+    652.3061623565242,
+    489.1868917724942
+   ]
+  },
+  "1000": {
+   "mm_per_px_x": 1.2740354733525863,
+   "mm_per_px_y": 1.2739241973242037,
+   "field_of_view_mm": [
+    815.3827029456553,
+    611.4836147156178
+   ]
+  },
+  "1500": {
+   "mm_per_px_x": 1.9110532100288795,
+   "mm_per_px_y": 1.9108862959863055,
+   "field_of_view_mm": [
+    1223.074054418483,
+    917.2254220734267
+   ]
+  }
+ },
+ "rms_px": 0.09593457144609313,
+ "grade": "PASS",
+ "derived_from": {
+  "calibration": "calibrations/1280x960_MJPG/camera_1280x960_MJPG.json",
+  "mode": "1280x960_MJPG",
+  "mapping_s_bx_by": [
+   0.5,
+   0.0,
+   0.0
+  ],
+  "reference_grade": "PASS",
+  "reference_holdout_metric": {
+   "holdout_mm_rms": 0.08083112321183193,
+   "holdout_mm_p95": 0.14002770423208177,
+   "holdout_mm_max": 1.5704723171140909,
+   "holdout_distance_mm_median": 697.5331803221654
+  }
+ },
+ "verification": {
+  "ref": "1280x960_MJPG",
+  "test": "640x480_MJPG",
+  "fitted": {
+   "s": 0.4999763439141009,
+   "bx": 0.27249833552690667,
+   "by": 0.2641426754410538,
+   "n": 72,
+   "residual_rms_px": 0.07926014301979298,
+   "residual_max_px": 0.14815099581455932
+  },
+  "expected": {
+   "s": 0.5,
+   "bx": 0.0,
+   "by": 0.0
+  },
+  "camera_still_check": {
+   "s": 1.000011125203707,
+   "bx": -0.0019259448790660324,
+   "by": -0.0036158156271746487,
+   "n": 72,
+   "residual_rms_px": 0.02095668249117057,
+   "residual_max_px": 0.05058634705488386
+  },
+  "camera_still": true,
+  "matches_hardware_scaling": true,
+  "test_frames_averaged": 6
+ },
+ "geometry_controls": {},
+ "created": "2026-11-25T19:17:31",
+ "issues": [
+  "PASS (derived): exact re-sampling of 1280x960_MJPG verified on the camera - mapping residual 0.079 px RMS over 72 corners; reference accuracy 0.081 mm RMS / 0.140 mm p95"
+ ]
+}
